@@ -70,16 +70,12 @@ function getNum(val) {
 
 //Xử lý lấp đầy khoảng trắng khi in
 const count_tr_selector = $(".headergrid2 tbody tr");
-console.log(count_tr_selector.length);
+
 let string = "";
-//   "<tr style='height: 15px'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 
 for (let i = 1; i < 12 - count_tr_selector.length; i++) {
-  console.log(i);
   string +=
     "<tr style='height: 15px'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 }
-console.log(string);
-$("#data_table tbody tr:last-child").before(string);
 
-console.log($("#data_table tbody tr:last-child"));
+$("#data_table tbody tr:last-child").before(string);
