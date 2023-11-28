@@ -1,0 +1,45 @@
+select {from_ser} as from_ser
+  , {to_ser} as to_ser
+  , {condition_ser} as condition_ser
+  , {content_ser} as content_ser,
+  {item_no_ser} item_no_ser,
+    {item_name_ser} item_name_ser,
+    {cust_cd_ser} cust_cd_ser,
+    {cust_name_ser} cust_name_ser
+  , b.delv_no
+  , b.cust_cd
+  , cust.cust_name
+  , a.item_cd
+  , item.item_no
+  , item.item_name
+  , item.hierarchy
+  , item.price
+  , SUM(a.delv_plan_qty) as qty
+  , item.price * SUM(a.delv_plan_qty) as amount
+  , item.spec
+  , b.wh_cd
+  , wh.wh_nm
+  , max(DATE_FORMAT(b.print_date,'%Y/%m/%d')) as print_date
+  , max(b.delv_no) as issuance_no
+  , GROUP_CONCAT(distinct a.detail_remark SEPARATOR ', ') as detail_remark
+  , cust.biz_no as cust_biz_no
+  , cust.cust_name as cust_cust_name
+  , cust.ceo_name as cust_ceo_name
+  , cust.address as cust_address
+  , company.company_biz_no as company_biz_no
+  , company.company_name as company_company_name
+  , company.ceo_name as company_ceo_name
+  , company.company_address1 as company_address
+  
+from tb_parts_delv_detail a
+join tb_parts_delv b on b.delv_no = a.delv_no
+join tb_ma_cust cust on cust.cust_cd = b.cust_cd
+join vw_ma_item item on item.item_cd = a.item_cd
+left join tb_ma_wh wh on wh.wh_cd = b.wh_cd
+left join tb_ma_company company on company.company_cd = 'YNK00'
+where 1=1
+group by b.delv_no
+having (ifnull({item_no_ser}, '') = '' or item.item_no like concat('%', {item_no_ser}, '%'))
+   and (ifnull({cust_cd_ser}, '') = '' or b.cust_cd = {cust_cd_ser}) 
+and (ifnull({from_ser},'') = '' or max(b.print_date) >= {from_ser})
+and (ifnull({to_ser},'') = '' or max(b.print_date) <= {to_ser})

@@ -1,0 +1,16 @@
+select
+    a.delv_no,
+    a.sorder,
+    a.po_no,
+    a.item_cd,
+    b.item_no,
+    b.item_name,
+    b.unit,
+    a.delv_qty,
+    a.delv_price,
+    a.delv_amount,
+    a.detail_remark
+from tb_parts_delv_detail a
+    left join vw_ma_item b on a.item_cd = b.item_cd
+where a.delv_no = {delv_no}
+order by a.po_no asc, b.item_no asc
