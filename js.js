@@ -30,6 +30,14 @@ $("#sum-1")[0].innerText = formatNumber(getNum(sum1));
 $("#sum-2")[0].innerText = formatNumber(getNum(sum2));
 $("#sum-1").css("font-weight", "bold");
 $("#sum-2").css("font-weight", "bold");
+let total_cost = sum2;
+let total_cost_tax = sum2 * 0.1;
+let total_cost_after_tax = total_cost + total_cost_tax;
+$("#total_cost")[0].innerText = formatNumber(getNum(sum2));
+$("#total_cost_tax")[0].innerText = formatNumber(getNum(total_cost_tax));
+$("#total_cost_after_tax")[0].innerText = formatNumber(
+  getNum(total_cost_after_tax)
+);
 
 //format định dạng số
 function formatNumber(number) {
@@ -59,3 +67,19 @@ function getNum(val) {
   }
   return val;
 }
+
+//Xử lý lấp đầy khoảng trắng khi in
+const count_tr_selector = $(".headergrid2 tbody tr");
+console.log(count_tr_selector.length);
+let string = "";
+//   "<tr style='height: 15px'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+
+for (let i = 1; i < 12 - count_tr_selector.length; i++) {
+  console.log(i);
+  string +=
+    "<tr style='height: 15px'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+}
+console.log(string);
+$("#data_table tbody tr:last-child").before(string);
+
+console.log($("#data_table tbody tr:last-child"));
