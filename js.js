@@ -73,9 +73,29 @@ const count_tr_selector = $(".headergrid2 tbody tr");
 
 let string = "";
 
-for (let i = 1; i < 12 - count_tr_selector.length; i++) {
+for (let i = 1; i < 13 - count_tr_selector.length; i++) {
   string +=
-    "<tr style='height: 15px'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+    "<tr style='height: 15px;text-align: center;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 }
 
 $("#data_table tbody tr:last-child").before(string);
+
+// Function to add numbering to the 순번 column
+function addSequenceNumbers() {
+  // Get the tbody element
+  var tbody = document
+    .getElementById("data_table")
+    .getElementsByTagName("tbody")[0];
+
+  // Get all rows in the tbody
+  var rows = tbody.getElementsByTagName("tr");
+
+  // Iterate through the rows and add sequence number to the first cell
+  for (var i = 1; i < rows.length - 1; i++) {
+    var sequenceCell = rows[i].getElementsByTagName("td")[0];
+    sequenceCell.textContent = i;
+  }
+}
+
+// Call the function to add sequence numbers when the page loads
+window.onload = addSequenceNumbers;
