@@ -88,7 +88,7 @@ const count_tr_selector_duplicate = $(".headergrid2_duplicate tbody tr");
 
 let string = "";
 
-for (let i = 1; i < 13 - count_tr_selector.length; i++) {
+for (let i = 1; i < 12 - count_tr_selector.length; i++) {
   string +=
     "<tr style='height: 15px;text-align: center;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 }
@@ -97,7 +97,7 @@ $("#data_table tbody tr:last-child").before(string);
 
 let string_duplicate = "";
 
-for (let i = 1; i < 13 - count_tr_selector_duplicate.length; i++) {
+for (let i = 1; i < 12 - count_tr_selector_duplicate.length; i++) {
   string_duplicate +=
     "<tr style='height: 15px;text-align: center;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 }
