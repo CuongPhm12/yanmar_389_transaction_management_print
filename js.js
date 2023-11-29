@@ -31,25 +31,12 @@ $("#sum-2")[0].innerText = formatNumber(getNum(sum2));
 $("#sum-1").css("font-weight", "bold");
 $("#sum-2").css("font-weight", "bold");
 
-$("#sum-1_duplicate")[0].innerText = formatNumber(getNum(sum1));
-$("#sum-2_duplicate")[0].innerText = formatNumber(getNum(sum2));
-$("#sum-1_duplicate").css("font-weight", "bold");
-$("#sum-2_duplicate").css("font-weight", "bold");
-
 let total_cost = sum2;
 let total_cost_tax = sum2 * 0.1;
 let total_cost_after_tax = total_cost + total_cost_tax;
 $("#total_cost")[0].innerText = formatNumber(getNum(sum2));
 $("#total_cost_tax")[0].innerText = formatNumber(getNum(total_cost_tax));
 $("#total_cost_after_tax")[0].innerText = formatNumber(
-  getNum(total_cost_after_tax)
-);
-
-$("#total_cost_duplicate")[0].innerText = formatNumber(getNum(sum2));
-$("#total_cost_tax_duplicate")[0].innerText = formatNumber(
-  getNum(total_cost_tax)
-);
-$("#total_cost_after_tax_duplicate")[0].innerText = formatNumber(
   getNum(total_cost_after_tax)
 );
 
@@ -84,25 +71,15 @@ function getNum(val) {
 
 //Xử lý lấp đầy khoảng trắng khi in
 const count_tr_selector = $(".headergrid2 tbody tr");
-const count_tr_selector_duplicate = $(".headergrid2_duplicate tbody tr");
 
 let string = "";
 
-for (let i = 1; i < 12 - count_tr_selector.length; i++) {
+for (let i = 1; i < 13 - count_tr_selector.length; i++) {
   string +=
     "<tr style='height: 15px;text-align: center;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 }
 
 $("#data_table tbody tr:last-child").before(string);
-
-let string_duplicate = "";
-
-for (let i = 1; i < 12 - count_tr_selector_duplicate.length; i++) {
-  string_duplicate +=
-    "<tr style='height: 15px;text-align: center;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
-}
-
-$("#data_table_duplicate tbody tr:last-child").before(string_duplicate);
 
 // Function to add numbering to the 순번 column
 function addSequenceNumbers() {
@@ -121,26 +98,54 @@ function addSequenceNumbers() {
   }
 }
 
-// Function to add numbering to the 순번 column
-function addSequenceNumbersDuplicate() {
-  // Get the tbody element
-  var tbody = document
-    .getElementById("data_table_duplicate")
-    .getElementsByTagName("tbody")[0];
-
-  // Get all rows in the tbody
-  var rows = tbody.getElementsByTagName("tr");
-
-  // Iterate through the rows and add sequence number to the first cell
-  for (var i = 1; i < rows.length - 1; i++) {
-    var sequenceCell = rows[i].getElementsByTagName("td")[0];
-    sequenceCell.textContent = i;
+// Function to duplicate tables if it exists
+function duplicateTables() {
+  // Duplicate the first table
+  var originalTable1 = document.getElementById("header_table");
+  if (originalTable1) {
+    var clonedTable1 = originalTable1.cloneNode(true);
+    copyStyles(originalTable1, clonedTable1);
+    document.body.appendChild(clonedTable1);
+    // Change IDs of buttons and update text in the cloned table to avoid duplicates
+    changeContent(clonedTable1);
+  }
+  // Duplicate the second table if it exists
+  var originalTable2 = document.getElementById("data_table");
+  if (originalTable2) {
+    var clonedTable2 = originalTable2.cloneNode(true);
+    copyStyles(originalTable2, clonedTable2);
+    document.body.appendChild(clonedTable2);
+    // Change IDs of buttons and update text in the cloned table to avoid duplicates
+    changeContent(clonedTable2);
   }
 }
+
+// Function to copy styles from one element to another
+function copyStyles(source, destination) {
+  var sourceStyles = window.getComputedStyle(source);
+  for (var styleName of sourceStyles) {
+    destination.style[styleName] = sourceStyles[styleName];
+  }
+}
+
+// Function to change content in a table
+function changeContent(table) {
+  // Look for the specific <span> element and update its text content
+  var spanElement = table.querySelector(
+    'span[style="font-size: 18px;"] strong'
+  );
+  if (
+    spanElement &&
+    spanElement.textContent.trim() === "거래명세서 (출력 버튼 사용)"
+  ) {
+    spanElement.textContent = "거래명세서 (공급하는자용)";
+  }
+}
+
 // Combined function to run both functions on window.onload
 function onWindowLoad() {
   addSequenceNumbers();
-  addSequenceNumbersDuplicate();
+  duplicateTables();
 }
 
 // Call the combined function to add sequence numbers when the page loads
