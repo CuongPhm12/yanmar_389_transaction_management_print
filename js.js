@@ -137,6 +137,11 @@ function addSequenceNumbersDuplicate() {
     sequenceCell.textContent = i;
   }
 }
-// Call the function to add sequence numbers when the page loads
-window.onload = addSequenceNumbers;
-window.onload = addSequenceNumbersDuplicate;
+// Combined function to run both functions on window.onload
+function onWindowLoad() {
+  addSequenceNumbers();
+  addSequenceNumbersDuplicate();
+}
+
+// Call the combined function to add sequence numbers when the page loads
+window.onload = onWindowLoad;
