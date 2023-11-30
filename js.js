@@ -137,24 +137,12 @@ function duplicateTables() {
     .append($("#data_table").clone());
 }
 
-// Function to change content in a table
-function changeContent(table) {
-  // Look for the specific <span> element and update its text content
-  var spanElement = table.querySelector(
-    'span[style="font-size: 24px;"] strong'
-  );
-  if (
-    spanElement &&
-    spanElement.textContent.trim() === "거래명세서 (공급받는자용)"
-  ) {
-    spanElement.textContent = "거래명세서 (공급하는자용)";
-  }
-}
-
 // Combined function to run both functions on window.onload
 function onWindowLoad() {
   addSequenceNumbers();
   duplicateTables();
+  $(".change_text:last").text("공급하는자용");
+  //   console.log( $(".change_text:last"))
 }
 
 // Call the combined function to add sequence numbers when the page loads
