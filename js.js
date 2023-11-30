@@ -4,6 +4,7 @@
 // console.log($("#barcode"))
 // JsBarcode("#code128", "Hi!");
 
+//add cdn barcode library and using jquery to use
 async function loadScript(src) {
   return new Promise((resolve, reject) => {
     let script = document.createElement("script");
@@ -28,13 +29,14 @@ async function loadScript(src) {
   });
 })();
 
+//Declare variable
 let elements_1 = $(".sum-1");
 let elements_2 = $(".sum-2");
 
 let sum1 = 0;
 let sum2 = 0;
 
-//Tính tổng số lượng cột MRP
+//get total by id
 for (let i = 0; i < elements_1.length; i++) {
   let a = elements_1[i].innerText;
   a = parseFloat(a);
@@ -45,7 +47,7 @@ for (let i = 0; i < elements_1.length; i++) {
   sum1 += a;
 }
 
-//Tính tổng số lượng cột theo chứng thực
+//get total by id
 for (let i = 0; i < elements_2.length; i++) {
   let a = elements_2[i].innerText;
   a = parseFloat(a.replace(",", ""));
@@ -70,7 +72,7 @@ $("#total_cost_after_tax")[0].innerText = formatNumber(
   getNum(total_cost_after_tax)
 );
 
-//format định dạng số
+//format number
 function formatNumber(number) {
   // Chuyển số thành chuỗi
   let numStr = number.toString();
@@ -92,6 +94,7 @@ function formatNumber(number) {
   return numStr;
 }
 
+//prevent NaN val
 function getNum(val) {
   if (isNaN(val)) {
     return 0;
@@ -99,7 +102,7 @@ function getNum(val) {
   return val;
 }
 
-//Xử lý lấp đầy khoảng trắng khi in
+//adding blank row to full of 9 rows
 const count_tr_selector = $(".headergrid2 tbody tr");
 
 let string = "";
@@ -142,7 +145,10 @@ function onWindowLoad() {
   addSequenceNumbers();
   duplicateTables();
   $(".change_text:last").text("거래명세서(공급하는자용)");
-  //   console.log( $(".change_text:last"))
+
+  $(".changeText:last").html(
+    "<strong>공</strong><br /><strong>급</strong><br /><strong>하<br /><strong>는</strong><br /><strong>자</strong> </strong>"
+  );
 }
 
 // Call the combined function to add sequence numbers when the page loads
