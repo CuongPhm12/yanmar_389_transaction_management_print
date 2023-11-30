@@ -1,3 +1,33 @@
+// var jexcelScript = document.createElement("script");
+// jexcelScript.setAttribute("src","https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js");
+// document.head.appendChild(jexcelScript);
+// console.log($("#barcode"))
+// JsBarcode("#code128", "Hi!");
+
+async function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    let script = document.createElement("script");
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+(async () => {
+  await loadScript(
+    "https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"
+  );
+  let barcode_text = document.getElementById("barcode_text").textContent;
+  $("#barcode").JsBarcode(barcode_text.trim(), {
+    format: "code39",
+    //   lineColor: "#0aa",
+    width: 3.3,
+    height: 50,
+    //   displayValue: false
+  });
+})();
+
 let elements_1 = $(".sum-1");
 let elements_2 = $(".sum-2");
 
@@ -101,42 +131,21 @@ function addSequenceNumbers() {
 // Function to duplicate tables if it exists
 function duplicateTables() {
   // Duplicate the first table
-  var originalTable1 = document.getElementById("header_table");
-  if (originalTable1) {
-    var clonedTable1 = originalTable1.cloneNode(true);
-    copyStyles(originalTable1, clonedTable1);
-    document.body.appendChild(clonedTable1);
-    // Change IDs of buttons and update text in the cloned table to avoid duplicates
-    changeContent(clonedTable1);
-  }
-  // Duplicate the second table if it exists
-  var originalTable2 = document.getElementById("data_table");
-  if (originalTable2) {
-    var clonedTable2 = originalTable2.cloneNode(true);
-    copyStyles(originalTable2, clonedTable2);
-    document.body.appendChild(clonedTable2);
-    // Change IDs of buttons and update text in the cloned table to avoid duplicates
-    changeContent(clonedTable2);
-  }
-}
-
-// Function to copy styles from one element to another
-function copyStyles(source, destination) {
-  var sourceStyles = window.getComputedStyle(source);
-  for (var styleName of sourceStyles) {
-    destination.style[styleName] = sourceStyles[styleName];
-  }
+  $("#header_table")
+    .parent()
+    .append($("#header_table").clone())
+    .append($("#data_table").clone());
 }
 
 // Function to change content in a table
 function changeContent(table) {
   // Look for the specific <span> element and update its text content
   var spanElement = table.querySelector(
-    'span[style="font-size: 18px;"] strong'
+    'span[style="font-size: 24px;"] strong'
   );
   if (
     spanElement &&
-    spanElement.textContent.trim() === "거래명세서 (출력 버튼 사용)"
+    spanElement.textContent.trim() === "거래명세서 (공급받는자용)"
   ) {
     spanElement.textContent = "거래명세서 (공급하는자용)";
   }
