@@ -22,8 +22,8 @@ async function loadScript(src) {
   $("#barcode").JsBarcode(barcode_text.trim(), {
     format: "code39",
     //   lineColor: "#0aa",
-    width: 3.3,
-    height: 50,
+    width: 2.6,
+    height: 40,
     //   displayValue: false
   });
 })();
@@ -104,7 +104,7 @@ const count_tr_selector = $(".headergrid2 tbody tr");
 
 let string = "";
 
-for (let i = 1; i < 13 - count_tr_selector.length; i++) {
+for (let i = 1; i < 12 - count_tr_selector.length; i++) {
   string +=
     "<tr style='height: 15px;text-align: center;'><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 }
@@ -141,7 +141,7 @@ function duplicateTables() {
 function onWindowLoad() {
   addSequenceNumbers();
   duplicateTables();
-  $(".change_text:last").text("공급하는자용");
+  $(".change_text:last").text("거래명세서(공급하는자용)");
   //   console.log( $(".change_text:last"))
 }
 
